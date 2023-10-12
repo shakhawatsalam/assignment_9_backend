@@ -1,4 +1,5 @@
 import { User } from '@prisma/client';
+import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import { Secret } from 'jsonwebtoken';
 import config from '../../../config';
@@ -8,6 +9,9 @@ import prisma from '../../../shared/prisma';
 import { ILoginUser } from './auth.interface';
 
 const SignUP = async (data: User) => {
+  const { password } = data;
+  const bcryptPassword = await bcrypt.hash(password, 12);
+  data.password = bcryptPassword;
   const result = await prisma.user.create({
     data,
   });
@@ -16,16 +20,23 @@ const SignUP = async (data: User) => {
 
 const loginUser = async (payload: ILoginUser): Promise<string> => {
   const { email, password } = payload;
-  const isUserExist = await prisma.user.findFirst({
+  const isUserExist = await prisma.user.findUnique({
     where: {
-      email,
-      password,
+      email: email,
     },
   });
+
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found');
   }
-
+  const checkPassword = await bcrypt.compare(password, isUserExist.password);
+  console.log(checkPassword);
+  if (!checkPassword) {
+    throw new ApiError(
+      httpStatus.NOT_FOUND,
+      'Email address or password not valid'
+    );
+  }
   // create assess token
   const { id: userId, role } = isUserExist;
   const accessToken = jwtHelpers.createToken(

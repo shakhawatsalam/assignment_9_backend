@@ -2,7 +2,10 @@ import { UserRole } from '@prisma/client';
 import { z } from 'zod';
 const create = z.object({
   body: z.object({
-    name: z.string({
+    firstName: z.string({
+      required_error: 'Name is Required',
+    }),
+    lastName: z.string({
       required_error: 'Name is Required',
     }),
     email: z.string({
