@@ -10,7 +10,10 @@ import { ILoginUser } from './auth.interface';
 
 const SignUP = async (data: User) => {
   const { password } = data;
-  const bcryptPassword = await bcrypt.hash(password, 12);
+  const bcryptPassword = await bcrypt.hash(
+    password,
+    Number(config.bycrypt_salt_rounds)
+  );
   data.password = bcryptPassword;
   const result = await prisma.user.create({
     data,

@@ -31,3 +31,19 @@ enum UserRole {
   superAdmin
   user
 }
+
+model Service {
+  id           String              @id @default(uuid())
+  title        String
+  description  String
+  image        String
+  price        Int
+  availability ServiceAvailabality @default(available)
+
+  @@map("services")
+}
+
+enum ServiceAvailabality {
+  upcomming
+  available
+}
