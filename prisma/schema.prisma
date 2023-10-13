@@ -39,6 +39,8 @@ model Service {
   image        String
   price        Int
   availability ServiceAvailabality @default(available)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
 
   @@map("services")
 }

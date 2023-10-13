@@ -5,6 +5,7 @@ import { serviceValidation } from './service.validation';
 
 const router = express.Router();
 
+router.get('/', ServiceController.getSingleService);
 router.get('/:id', ServiceController.getSingleService);
 router.post(
   '/',
