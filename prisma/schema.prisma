@@ -60,7 +60,8 @@ model Booking {
   service       Service       @relation(fields: [serviceId], references: [id])
   bookingStatus BookingStatus @default(pending)
   bookingDate   DateTime
-  bookingSlot   String
+  slotId        String
+  slot          TimeSlots     @relation(fields: [slotId], references: [id])
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
@@ -77,25 +78,12 @@ model TimeSlots {
   id        String @id @default(uuid())
   startTime String @map("start_time")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  bookings  Booking[]
 
   @@map("time_slots")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //// 
 model Day {

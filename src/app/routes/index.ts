@@ -1,4 +1,5 @@
 import express from 'express';
+import { BookingRoutes } from '../modules/Booking/booking.routes';
 import { timeSlotsRoutes } from '../modules/TimeSlot/timeSlots.routes';
 import { AuthRouter } from '../modules/auth/auth.routes';
 import { ServiceRouter } from '../modules/service/service.routes';
@@ -23,6 +24,10 @@ const moduleRoutes = [
   {
     path: '/time-slots',
     route: timeSlotsRoutes,
+  },
+  {
+    path: '/booking',
+    route: BookingRoutes,
   },
 ];
 
