@@ -9,6 +9,7 @@ import { serviceService } from './service.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
+  console.log(data);
   const result = await serviceService.insertIntoDB(data);
 
   sendResponse(res, {

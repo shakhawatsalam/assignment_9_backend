@@ -9,7 +9,7 @@ router.get('/', ServiceController.getAllService);
 router.get('/:id', ServiceController.getSingleService);
 router.post(
   '/',
-  validateRequest(serviceValidation.create),
+  // validateRequest(serviceValidation.create),
   ServiceController.insertIntoDB
 );
 

@@ -88,7 +88,7 @@ model TimeSlots {
 //// 
 model Day {
   id        String @id @default(uuid())
-  name      String // monday, tuesday
+  name      String @unique // monday, tuesday
   dayOfWeek Int
   openTime  String
   closeTime String

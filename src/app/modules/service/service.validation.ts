@@ -24,7 +24,7 @@ const update = z.object({
     image: z.string().optional(),
     description: z.string().optional(),
     price: z.number().optional(),
-    availability: z.enum(['upcoming', 'available']).optional(),
+    availability: z.enum(['upcomming', 'available']).optional(),
   }),
 });
 

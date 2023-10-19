@@ -1,9 +1,6 @@
 import { Prisma, Service } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
-import { IGenericResponse } from '../../../interfaces/common';
-import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
 import { serviceSearchAbleFields } from './service.constant';
 import { IServiceFilters } from './service.interface';
@@ -17,13 +14,10 @@ const insertIntoDB = async (data: Service) => {
 
 // * 🚀🚀 Get By Id service
 const getAllServiceFromDB = async (
-  filters: IServiceFilters,
-  options: IPaginationOptions
-): Promise<IGenericResponse<Service[]>> => {
-  const { page, limit, skip } = paginationHelpers.calculatePagination(options);
+  filters: IServiceFilters
+): Promise<Service[]> => {
   const { searchTerm, ...filtersData } = filters;
-  console.log(filters);
-  console.log(options);
+
   const andConditions = [];
 
   if (searchTerm) {
@@ -56,26 +50,9 @@ const getAllServiceFromDB = async (
     andConditions.length > 0 ? { AND: andConditions } : {};
   const result = await prisma.service.findMany({
     where: whereCondition,
-    skip,
-    take: limit,
-    orderBy:
-      options.sortBy && options.sortBy
-        ? {
-            [options.sortBy]: options.sortOrder,
-          }
-        : {
-            createdAt: 'desc',
-          },
   });
-  const total = await prisma.service.count();
-  return {
-    meta: {
-      total,
-      page,
-      limit,
-    },
-    data: result,
-  };
+  // const total = await prisma.service.count();
+  return result;
 };
 // * 🚀🚀 Get By Id service
 const getSingleService = async (id: string) => {
