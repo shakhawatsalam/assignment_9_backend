@@ -8,6 +8,8 @@ const createTimeSlot = async (
 ) => {
   try {
     const { ...timeSlotData } = req.body;
+    console.log(timeSlotData);
+    // console.log(timeSlotData);
     const timeSlot = await timeSlotsServices.createTimeSlot(timeSlotData);
     res.status(200).json({
       status: 'success',
@@ -24,8 +26,10 @@ const getAllTimeSlots = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { date } = req.query;
+  console.log(date);
   try {
-    const timeSlots = await timeSlotsServices.getAllTimeSlots();
+    const timeSlots = await timeSlotsServices.getAllTimeSlots(date);
     res.status(200).json({
       status: 'success',
       message: 'Time Slots fetched successfully',

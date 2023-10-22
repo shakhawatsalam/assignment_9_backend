@@ -75,12 +75,13 @@ enum BookingStatus {
 }
 
 model TimeSlots {
-  id        String @id @default(uuid())
-  startTime String @map("start_time")
-
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  bookings  Booking[]
+  id           String    @id @default(uuid())
+  startTime    String    @map("start_time")
+  date         DateTime
+  availability Boolean   @default(false)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  bookings     Booking[]
 
   @@map("time_slots")
 }

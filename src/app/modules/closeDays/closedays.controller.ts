@@ -6,6 +6,7 @@ import { closeDayService } from './closedays.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
+
   const result = await closeDayService.insertIntoDB(data);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -25,6 +26,7 @@ const getAllCloseDays = catchAsync(async (req: Request, res: Response) => {
 });
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
+  console.log(data);
   const result = await closeDayService.deleteFromDB(data);
   sendResponse(res, {
     statusCode: httpStatus.OK,

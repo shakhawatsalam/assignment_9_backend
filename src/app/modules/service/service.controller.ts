@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { paginationFields } from '../../../constants/pagination';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
@@ -21,9 +20,9 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 });
 const getAllService = catchAsync(async (req: Request, res: Response) => {
   const filter = pick(req.query, serviceFilterableFields);
-  const pagination = pick(req.query, paginationFields);
+  // const pagination = pick(req.query, paginationFields);
 
-  const result = await serviceService.getAllServiceFromDB(filter, pagination);
+  const result = await serviceService.getAllServiceFromDB(filter);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
